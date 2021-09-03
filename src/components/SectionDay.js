@@ -10,7 +10,8 @@ const Header = styled.div`
 const Button = styled.button`
 background: #E8833A;
 border-radius: 3px;
-width: 83px;
+min-width: 83px;
+max-width: 225px;
 height: 43px;
 border: none;
 margin: 22px 9px 22px 0;
@@ -39,5 +40,7 @@ const SectionDay = ({ id, weekday, date, showtimes }) => {
         </>
     )
 }
+
+export { Button }
 
 export default SectionDay;

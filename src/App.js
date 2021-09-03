@@ -13,18 +13,22 @@ import MovieSections from './components/MovieSections';
 
 
 function App() {
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState({
+    id: [],
+    name: '',
+    cpf: '',
+  });
 
   const selectSeat = (idSeat) => {
-    const newSelectedSeats = [...selectedSeats];
+    const newSelectedSeats = { ...selectedSeats };
 
-    if (newSelectedSeats.indexOf(idSeat) === -1) {
-      setSelectedSeats([...newSelectedSeats, idSeat]);
+    if (newSelectedSeats.id.indexOf(idSeat) === -1) {
+      newSelectedSeats.id.push(idSeat);
     }
     else {
-      setSelectedSeats(
-        newSelectedSeats.filter(seat => seat !== idSeat))
+      newSelectedSeats.id = newSelectedSeats.id.filter(seat => seat !== idSeat);
     }
+    setSelectedSeats(newSelectedSeats);
 
     console.log(selectedSeats);
   }
