@@ -29,6 +29,13 @@ const MovieSections = () => {
 
     }, [])
     console.log(sections);
+
+    if (Object.keys(sections).length === 0) {
+        return <Header>
+            Selecione o Horário
+        </Header>
+    }
+
     return (
         <>
             <MovieSection>
@@ -36,18 +43,17 @@ const MovieSections = () => {
                     Selecione o Horário
                 </Header>
                 {
-                    Object.keys(sections).length === 0 ? <></> :
-                        sections.days.map((day, key) =>
-                            <SectionDay key={key}
-                                id={day.id}
-                                weekday={day.weekday}
-                                date={day.date}
-                                showtimes={day.showtimes}
-                            />
-                        )
+                    sections.days.map((day, key) =>
+                        <SectionDay key={key}
+                            id={day.id}
+                            weekday={day.weekday}
+                            date={day.date}
+                            showtimes={day.showtimes}
+                        />
+                    )
                 }
             </MovieSection>
-            <Footer posterURL={sections.posterURL} title={sections.title} />
+            <Footer posterURL={sections.posterURL} title={sections.title} day={null} />
         </>
     )
 }

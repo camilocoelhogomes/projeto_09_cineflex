@@ -2,17 +2,8 @@ import styled from 'styled-components'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieCard from './MovieCard';
+import Header from './Header';
 
-
-const Header = styled.header`
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 110px;
-font-size: 24px;
-color: #293845;
-`;
 
 const Movies = styled.div`
     display: flex;
@@ -32,9 +23,8 @@ const MovieCatalog = () => {
     console.log(movies)
     return (
         <>
-            <Header>
-                Selecione o Filme
-            </Header>
+            <Header header={'Selecione o Filme'} />
+
             <Movies>
                 {movies.map((movie, key) => <MovieCard
                     key={key}

@@ -38,7 +38,7 @@ margin: 0 0 0 14px;
 
 
 
-const Footer = ({ posterURL, title, time }) => {
+const Footer = ({ posterURL, title, day, time }) => {
     return (
         <MovieFooter>
             <Poster>
@@ -46,7 +46,10 @@ const Footer = ({ posterURL, title, time }) => {
             </Poster>
             <div>
                 <MovieTitle>{title}</MovieTitle>
-                <MovieTitle>{time}</MovieTitle>
+                {
+                    day === null ? <></> :
+                        <MovieTitle>{day} - {time}</MovieTitle>
+                }
             </div>
         </MovieFooter>
     )

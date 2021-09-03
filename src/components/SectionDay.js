@@ -28,7 +28,7 @@ const SectionDay = ({ id, weekday, date, showtimes }) => {
             </Header>
             {
                 showtimes.map((showtime, key) =>
-                    <Link to={`${match.url}/section/${id}`}>
+                    <Link to={`${match.url}/section/${showtime.id}`}>
                         <Button key={key}>
                             {showtime.name}
                         </Button>
