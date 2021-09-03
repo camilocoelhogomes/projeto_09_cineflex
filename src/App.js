@@ -4,12 +4,31 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import React, { useState } from 'react';
 
 import MovieSeats from './components/MovieSeats';
 import MovieCatalog from './components/MovieCatalog';
 import TopBar from './components/TopBar';
 import MovieSections from './components/MovieSections';
+
+
 function App() {
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const selectSeat = (idSeat) => {
+    const newSelectedSeats = [...selectedSeats];
+
+    if (newSelectedSeats.indexOf(idSeat) === -1) {
+      setSelectedSeats([...newSelectedSeats, idSeat]);
+    }
+    else {
+      setSelectedSeats(
+        newSelectedSeats.filter(seat => seat !== idSeat))
+    }
+
+    console.log(selectedSeats);
+  }
+
   return (
     <BrowserRouter>
       <TopBar />
@@ -22,7 +41,10 @@ function App() {
           <MovieSections />
         </Route>
         <Route exact path='/movie/:idMovie/section/:idSection'>
-          <MovieSeats />
+          <MovieSeats
+            selectedSeats={selectedSeats}
+            selectSeat={selectSeat}
+          />
         </Route>
       </Switch>
 
