@@ -36,7 +36,8 @@ const MovieCatalog = () => {
                 Selecione o Filme
             </Header>
             <Movies>
-                {movies.map(movie => <MovieCard
+                {movies.map((movie, key) => <MovieCard
+                    key={key}
                     posterURL={movie.posterURL}
                     id={movie.id}
                     title={movie.title}

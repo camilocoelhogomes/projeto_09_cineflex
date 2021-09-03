@@ -1,15 +1,14 @@
 import './App.css';
-import MovieCatalog from './components/MovieCatalog';
 import {
   BrowserRouter,
   Switch,
   Route,
-  Link,
-  useRouteMatch,
-  useParams
 } from "react-router-dom";
 
+import MovieSeats from './components/MovieSeats';
+import MovieCatalog from './components/MovieCatalog';
 import TopBar from './components/TopBar';
+import MovieSections from './components/MovieSections';
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +17,12 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <MovieCatalog />
+        </Route>
+        <Route exact path='/movie/:idMovie'>
+          <MovieSections />
+        </Route>
+        <Route exact path='/movie/:idMovie/section/:idSection'>
+          <MovieSeats />
         </Route>
       </Switch>
 

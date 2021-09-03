@@ -18,7 +18,7 @@ const Img = styled.img`
 
 const MovieCard = ({ posterURL, id, title }) => {
     return (
-        <Link to={`section/${id}`}>
+        <Link to={`movie/${id}`}>
             <Poster>
                 <Img src={posterURL} alt={title} />
             </Poster>
