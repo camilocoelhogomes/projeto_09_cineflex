@@ -4,16 +4,7 @@ import styled from 'styled-components';
 import { useState, useEffect } from "react";
 import Footer from "./Footer";
 import SectionDay from './SectionDay'
-
-const Header = styled.header`
-width: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 110px;
-font-size: 24px;
-color: #293845;
-`;
+import { Header } from './Shared'
 
 const MovieSection = styled.div`
 margin: 0 24px;
@@ -28,7 +19,7 @@ const MovieSections = () => {
             .then(awnser => setSections(awnser.data))
 
     }, [])
-    console.log(sections);
+
 
     if (Object.keys(sections).length === 0) {
         return <Header>

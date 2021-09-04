@@ -1,9 +1,9 @@
 import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from './Shared'
 
 
-
-const SectionDay = ({ id, weekday, date, showtimes }) => {
+const SectionDay = ({ weekday, date, showtimes }) => {
     const match = useRouteMatch();
     return (
         <>
@@ -13,7 +13,7 @@ const SectionDay = ({ id, weekday, date, showtimes }) => {
             {
                 showtimes.map((showtime, key) =>
                     <Link key={key} to={`${match.url}/section/${showtime.id}`}>
-                        <Button key={key}>
+                        <Button width='83px' key={key}>
                             {showtime.name}
                         </Button>
                     </Link>
@@ -24,7 +24,6 @@ const SectionDay = ({ id, weekday, date, showtimes }) => {
     )
 }
 
-export { Button }
 
 export default SectionDay;
 
@@ -32,17 +31,4 @@ const Header = styled.div`
     color: #293845;
     font-size: 20px;
     line-height: 23px;
-`;
-
-const Button = styled.button`
-background: #E8833A;
-border-radius: 3px;
-min-width: 83px;
-max-width: 225px;
-height: 43px;
-border: none;
-margin: 22px 9px 22px 0;
-font-size: 18px;
-color: #ffffff
-
 `;

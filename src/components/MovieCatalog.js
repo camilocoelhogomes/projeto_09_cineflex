@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import MovieCard from './MovieCard';
-import Header from './Header';
+import { Header } from './Shared';
 
 
 const Movies = styled.div`
@@ -20,10 +20,10 @@ const MovieCatalog = () => {
             .then(awnser => setMovies(awnser.data))
     }, [])
 
-    console.log(movies)
+
     return (
         <>
-            <Header header={'Selecione o Filme'} />
+            <Header>Selecione o Filme</Header>
 
             <Movies>
                 {movies.map((movie, key) => <MovieCard

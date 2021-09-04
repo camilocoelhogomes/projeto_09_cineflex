@@ -3,13 +3,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useState, useEffect } from "react";
 import Footer from "./Footer";
-import Header from "./Header";
+import { Header, Button } from "./Shared";
 import Seat from './Seat';
-import { Button } from './SectionDay';
 
 
-
-const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, setSelectedSeats }) => {
+const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) => {
 
     const { idSection } = useParams();
     const [seats, setSeats] = useState({});
@@ -20,36 +18,16 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, setSelectedSeats }
 
     }, [])
 
-    const reserveSeats = (selectedSeats) => {
-        const sendServer = {
-            ids: selectedSeats.ids,
-            name: selectedSeats.name,
-            cpf: selectedSeats.cpf
-        }
-        const selectedMovie = { ...selectedSeats };
 
-        selectedMovie.time = seats.name;
-        selectedMovie.movie = seats.movie;
-        selectedMovie.day = seats.day;
-
-        selectedMovie.tickets = seats.seats.filter(seat => selectedMovie.ids.includes(seat.id))
-            .map(seat => seat.name)
-        setSelectedSeats(selectedMovie)
-        console.log(selectedSeats);
-
-        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
-            .then((res) => console.log(res, selectedSeats))
-
-    }
 
 
     if (Object.keys(seats).length === 0) {
-        return <Header header={'Selecione o(s) assento(s)'} />
+        return <Header>Selecione o(s) assento(s)</Header>
     }
 
     return (
         <>
-            <Header header={'Selecione o(s) assento(s)'} />
+            <Header>Selecione o(s) assento(s)</Header>
             <Seats>
                 {
                     seats.seats.map((seat, key) => <Seat
@@ -80,15 +58,24 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, setSelectedSeats }
             <ReserveSeats>
                 <InputArea>
                     <p>Nome do Comprador</p>
-                    <input placeholder={'Digite seu Nome...'} onChange={(e) => inputPerson('name', e.target.value)} />
+                    <input
+                        placeholder={'Digite seu Nome...'}
+                        onChange={(e) => inputPerson('name', e.target.value)}
+                        value={selectedSeats.name}
+                    />
                 </InputArea>
                 <InputArea>
                     <p>CPF do Comprador</p>
-                    <input placeholder={'Digite seu CPF...'} onChange={(e) => inputPerson('cpf', e.target.value)} />
+                    <input
+                        value={selectedSeats.cpf}
+                        placeholder={'Digite seu CPF...'}
+                        onChange={(e) => inputPerson('cpf', e.target.value)}
+                    />
                 </InputArea>
                 <Button
+                    width='225px'
                     disabled={selectedSeats.name.length === 0 || selectedSeats.cpf.length === 0 || selectedSeats.ids.length === 0}
-                    onClick={() => reserveSeats(selectedSeats)}
+                    onClick={() => reserveSeats(selectedSeats, seats)}
                 >Reserve Assentos</Button>
             </ReserveSeats>
 
