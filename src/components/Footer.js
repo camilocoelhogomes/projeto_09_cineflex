@@ -9,11 +9,10 @@ const Poster = styled.div`
     border-radius: 3px;
     align-items: center;
     box-sizing: border-box;
-`;
-
-const Img = styled.img`
-    width: 100%;
-    height: 100%;
+    img{
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const MovieFooter = styled.div`
@@ -42,7 +41,7 @@ const Footer = ({ posterURL, title, day, time }) => {
     return (
         <MovieFooter>
             <Poster>
-                <Img src={posterURL} alt={title} />
+                <img src={posterURL} alt={title} />
             </Poster>
             <div>
                 <MovieTitle>{title}</MovieTitle>

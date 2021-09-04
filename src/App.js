@@ -19,20 +19,23 @@ function App() {
     cpf: '',
   });
 
-  const selectSeat = (idSeat) => {
+  const selectSeat = (idSeat, isAvailable) => {
     const newSelectedSeats = { ...selectedSeats };
 
-    if (newSelectedSeats.id.indexOf(idSeat) === -1) {
-      newSelectedSeats.id.push(idSeat);
-    }
-    else {
-      newSelectedSeats.id = newSelectedSeats.id.filter(seat => seat !== idSeat);
-    }
-    setSelectedSeats(newSelectedSeats);
+    if (isAvailable) {
+      if (newSelectedSeats.id.indexOf(idSeat) === -1) {
+        newSelectedSeats.id.push(idSeat);
+      }
+      else {
+        newSelectedSeats.id = newSelectedSeats.id.filter(seat => seat !== idSeat);
+      }
+      setSelectedSeats(newSelectedSeats);
 
-    console.log(selectedSeats);
+      console.log(selectedSeats);
+    }
+
+    else { alert('Assento Indisponível') }
   }
-
   return (
     <BrowserRouter>
       <TopBar />
