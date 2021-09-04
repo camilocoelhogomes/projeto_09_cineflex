@@ -69,7 +69,7 @@ function App() {
     selectedMovie.tickets = seats.seats.filter(seat => selectedMovie.ids.includes(seat.id))
       .map(seat => seat.name);
 
-    setSelectedSeats(selectedMovie)
+    setSelectedSeats(selectedMovie);
     //
     axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
       .then(history.push('/confirm'))
