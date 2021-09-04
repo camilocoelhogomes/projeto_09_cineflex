@@ -7,101 +7,46 @@ import Header from "./Header";
 import Seat from './Seat';
 import { Button } from './SectionDay';
 
-const Seats = styled.div`
-display: grid;
-grid-template-columns: repeat(10, 1fr);
-gap: 18px 0px;
-grid-auto-rows: minmax(26px, auto);
-width: calc(100% - 48px);
-margin: 0 auto;
-`;
-
-const SeatsLabel = styled.div`
-    width: 100%;
-    margin: 16px 0 0 0;
-    display: flex;
-    justify-content: space-around;
-`;
 
 
-const LabelText = styled.div`
-font-size: 13px;
-color: #4E5A65;
-width: 72px;
-text-align: center;
-`;
-
-const Available = styled.div`
-width: 26px;
-height: 26px;
-border-radius: 100%;
-margin: 0 auto;
-border: 1px solid #808F9D;background: #C3CFD9;
-`;
-
-const Selected = styled.div`
-width: 26px;
-height: 26px;
-border-radius: 100%;
-margin: 0 auto;
-background: #8DD7CF;border: 1px solid #45BDB0;`;
-
-const Unavailable = styled.div`
-width: 26px;
-height: 26px;
-border-radius: 100%;
-margin: 0 auto;
-border: 1px solid #F7C52B;;background: #FBE192;`;
-
-const ReserveSeats = styled.div`
-    box-sizing: border-box;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 0 80px 0;
-`;
-
-const InputArea = styled.div`width: 100%`
-
-const BuyerInput = styled.p`
-font-size: 18px;
-line-height: 21px;
-color: #293845;
-margin: 7px 0;
-`
-
-const Input = styled.input`
-background: #FFFFFF;
-border: 1px solid #D5D5D5;
-box-sizing: border-box;
-border-radius: 3px;
-width: 100%;
-height: 50px;
-font-family: Roboto;
-font-weight: normal;
-font-size: 18px;
-line-height: 21px;
-padding: 8px;
-`
-
-const MovieSeats = ({ selectedSeats, selectSeat }) => {
+const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, setSelectedSeats }) => {
 
     const { idSection } = useParams();
     const [seats, setSeats] = useState({});
 
     useEffect(() => {
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSection}/seats`)
-            .then(awnser => setSeats(awnser.data))
+            .then(awnser => { setSeats(awnser.data) })
 
     }, [])
 
+    const reserveSeats = (selectedSeats) => {
+        const sendServer = {
+            ids: selectedSeats.ids,
+            name: selectedSeats.name,
+            cpf: selectedSeats.cpf
+        }
+        const selectedMovie = { ...selectedSeats };
+
+        selectedMovie.time = seats.name;
+        selectedMovie.movie = seats.movie;
+        selectedMovie.day = seats.day;
+
+        selectedMovie.tickets = seats.seats.filter(seat => selectedMovie.ids.includes(seat.id))
+            .map(seat => seat.name)
+        setSelectedSeats(selectedMovie)
+        console.log(selectedSeats);
+
+        axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
+            .then((res) => console.log(res, selectedSeats))
+
+    }
 
 
     if (Object.keys(seats).length === 0) {
         return <Header header={'Selecione o(s) assento(s)'} />
     }
-    console.log(seats.seats[0]);
+
     return (
         <>
             <Header header={'Selecione o(s) assento(s)'} />
@@ -119,35 +64,117 @@ const MovieSeats = ({ selectedSeats, selectSeat }) => {
             </Seats>
             <SeatsLabel>
                 <div>
-                    <Available></Available>
-                    <LabelText>Disponivel</LabelText>
+                    <Label label='' />
+                    <p>Disponivel</p>
                 </div>
                 <div>
-                    <Selected></Selected>
-                    <LabelText>Selecionado</LabelText>
+                    <Label label='selected' />
+                    <p>Selecionado</p>
                 </div>
                 <div>
-                    <Unavailable></Unavailable>
-                    <LabelText>Indisponível</LabelText>
+                    <Label label='disabled' />
+                    <p>Indisponível</p>
                 </div>
             </SeatsLabel>
 
             <ReserveSeats>
                 <InputArea>
-                    <BuyerInput>Nome do Comprador</BuyerInput>
-                    <Input placeholder={'Digite seu Nome...'} />
+                    <p>Nome do Comprador</p>
+                    <input placeholder={'Digite seu Nome...'} onChange={(e) => inputPerson('name', e.target.value)} />
                 </InputArea>
                 <InputArea>
-                    <BuyerInput>CPF do Comprador</BuyerInput>
-                    <Input placeholder={'Digite seu CPF...'} />
+                    <p>CPF do Comprador</p>
+                    <input placeholder={'Digite seu CPF...'} onChange={(e) => inputPerson('cpf', e.target.value)} />
                 </InputArea>
-                <Button>Reserve Assentos</Button>
+                <Button
+                    disabled={selectedSeats.name.length === 0 || selectedSeats.cpf.length === 0 || selectedSeats.ids.length === 0}
+                    onClick={() => reserveSeats(selectedSeats)}
+                >Reserve Assentos</Button>
             </ReserveSeats>
 
 
-            <Footer posterURL={seats.movie.posterURL} title={seats.movie.title} day={seats.day.weekday} time={seats.name} />
+            <Footer
+                posterURL={seats.movie.posterURL}
+                title={seats.movie.title}
+                day={seats.day.weekday}
+                time={seats.name}
+            />
         </>
     )
 }
 
 export default MovieSeats;
+
+const Seats = styled.div`
+display: grid;
+grid-template-columns: repeat(10, 1fr);
+gap: 18px 0px;
+grid-auto-rows: minmax(26px, auto);
+width: calc(100% - 48px);
+margin: 0 auto;
+`;
+
+const SeatsLabel = styled.div`
+    width: 100%;
+    margin: 16px 0 0 0;
+    display: flex;
+    justify-content: space-around;
+    p{
+        font-size: 13px;
+        color: #4E5A65;
+        width: 72px;
+        text-align: center;
+    }
+`;
+
+
+const Label = styled.div`
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    margin: 0 auto;
+
+    background: ${({ label }) => label === 'disabled' ? '#FBE192' :
+        label === 'selected' ? '#8DD7CF' : '#C3CFD9'};
+            
+    border: ${({ label }) => label === 'disabled' ? '1px solid #F7C52B' :
+        label === 'selected' ? '1px solid #45BDB0' : '1px solid #808F9D'};
+`;
+
+const ReserveSeats = styled.div`
+    box-sizing: border-box;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 80px 0;
+`;
+
+const InputArea = styled.div`
+width: 100%;
+    p{
+        font-size: 18px;
+        line-height: 21px;
+        color: #293845;
+        margin: 7px 0;
+    }
+    input{
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        box-sizing: border - box;
+        border-radius:3px;
+        width:100%;
+        height:50px;
+        font-family:'Roboto', sans-serif;
+        font-weight:normal;
+        font-size:18px;
+        line-height:21px;
+        padding:8px;
+
+        ::placeholder{
+            font-style: italic;
+        }
+    }
+`;
+
+

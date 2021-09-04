@@ -13,29 +13,40 @@ import MovieSections from './components/MovieSections';
 
 
 function App() {
+
   const [selectedSeats, setSelectedSeats] = useState({
-    id: [],
+    ids: [],
     name: '',
     cpf: '',
+    movie: {},
+    day: {},
+    time: '',
+    tickets: [],
   });
+
 
   const selectSeat = (idSeat, isAvailable) => {
     const newSelectedSeats = { ...selectedSeats };
 
     if (isAvailable) {
-      if (newSelectedSeats.id.indexOf(idSeat) === -1) {
-        newSelectedSeats.id.push(idSeat);
+      if (newSelectedSeats.ids.indexOf(idSeat) === -1) {
+        newSelectedSeats.ids.push(idSeat);
       }
       else {
-        newSelectedSeats.id = newSelectedSeats.id.filter(seat => seat !== idSeat);
+        newSelectedSeats.ids = newSelectedSeats.ids.filter(seat => seat !== idSeat);
       }
       setSelectedSeats(newSelectedSeats);
-
-      console.log(selectedSeats);
     }
 
     else { alert('Assento Indisponível') }
   }
+
+  const inputPerson = (item, value) => {
+    const newPerson = { ...selectedSeats };
+    newPerson[item] = value;
+    setSelectedSeats(newPerson);
+  }
+
   return (
     <BrowserRouter>
       <TopBar />
@@ -51,6 +62,8 @@ function App() {
           <MovieSeats
             selectedSeats={selectedSeats}
             selectSeat={selectSeat}
+            inputPerson={inputPerson}
+            setSelectedSeats={setSelectedSeats}
           />
         </Route>
       </Switch>

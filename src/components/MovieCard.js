@@ -13,7 +13,7 @@ const Poster = styled.div`
 
 const Img = styled.img`
     width: 100%;
-    heigth: 100%;
+    height: 100%;
 `;
 
 const MovieCard = ({ posterURL, id, title }) => {

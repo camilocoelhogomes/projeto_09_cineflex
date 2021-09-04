@@ -1,24 +1,7 @@
 import { Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Header = styled.div`
-    color: #293845;
-    font-size: 20px;
-    line-height: 23px;
-`;
 
-const Button = styled.button`
-background: #E8833A;
-border-radius: 3px;
-min-width: 83px;
-max-width: 225px;
-height: 43px;
-border: none;
-margin: 22px 9px 22px 0;
-font-size: 18px;
-color: #ffffff
-
-`;
 
 const SectionDay = ({ id, weekday, date, showtimes }) => {
     const match = useRouteMatch();
@@ -44,3 +27,22 @@ const SectionDay = ({ id, weekday, date, showtimes }) => {
 export { Button }
 
 export default SectionDay;
+
+const Header = styled.div`
+    color: #293845;
+    font-size: 20px;
+    line-height: 23px;
+`;
+
+const Button = styled.button`
+background: #E8833A;
+border-radius: 3px;
+min-width: 83px;
+max-width: 225px;
+height: 43px;
+border: none;
+margin: 22px 9px 22px 0;
+font-size: 18px;
+color: #ffffff
+
+`;

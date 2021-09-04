@@ -1,5 +1,25 @@
 import styled from 'styled-components'
 
+
+const Footer = ({ posterURL, title, day, time }) => {
+    return (
+        <MovieFooter>
+            <Poster>
+                <img src={posterURL} alt={title} />
+            </Poster>
+            <div>
+                <p>{title}</p>
+                {
+                    day === null ? <></> :
+                        <p>{day} - {time}</p>
+                }
+            </div>
+        </MovieFooter>
+    )
+}
+
+export default Footer;
+
 const Poster = styled.div`
     padding: 8px;
     width: 64px;
@@ -13,6 +33,7 @@ const Poster = styled.div`
         width: 100%;
         height: 100%;
     }
+
 `;
 
 const MovieFooter = styled.div`
@@ -26,32 +47,11 @@ const MovieFooter = styled.div`
     padding: 14px 10px;
     display: flex;
     align-items: center;
+    
+    div > p{
+        font-size: 26px;
+        line-height: 30px;
+        color: #293845;
+        margin: 0 0 0 14px;
+    }
 `;
-
-const MovieTitle = styled.p`
-font-size: 26px;
-line-height: 30px;
-color: #293845;
-margin: 0 0 0 14px;
-`;
-
-
-
-const Footer = ({ posterURL, title, day, time }) => {
-    return (
-        <MovieFooter>
-            <Poster>
-                <img src={posterURL} alt={title} />
-            </Poster>
-            <div>
-                <MovieTitle>{title}</MovieTitle>
-                {
-                    day === null ? <></> :
-                        <MovieTitle>{day} - {time}</MovieTitle>
-                }
-            </div>
-        </MovieFooter>
-    )
-}
-
-export default Footer;
