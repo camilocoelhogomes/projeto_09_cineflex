@@ -42,7 +42,6 @@ button{
     background-color: inherit;
     position: absolute;
     left: 0;
-
 }
 `;
 

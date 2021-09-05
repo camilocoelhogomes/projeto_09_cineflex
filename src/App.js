@@ -70,7 +70,9 @@ function App() {
       .map(seat => seat.name);
 
     setSelectedSeats(selectedMovie);
-    //
+    console.log(selectedMovie);
+    history.push('/confirm');
+    /*/
     axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
       .then(history.push('/confirm'))
     //*/
