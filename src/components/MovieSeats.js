@@ -76,8 +76,11 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
                     width='225px'
                     disabled={selectedSeats.name.length === 0 || selectedSeats.cpf.length === 0 || selectedSeats.ids.length === 0}
                     onClick={() => reserveSeats(selectedSeats, seats)}
-                >Reserve Assentos</Button>
+                >
+                    Reserve Assentos
+                </Button>
             </ReserveSeats>
+
 
 
             <Footer

@@ -1,4 +1,30 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { ArrowBackOutline } from 'react-ionicons';
+import { useHistory, useLocation } from 'react-router-dom';
+
+const TopBar = () => {
+    let history = useHistory();
+    return (
+        <>
+
+            <Header>
+                {
+                    useLocation().pathname === '/' ? <></> :
+                        <button onClick={() => history.goBack()}>
+                            <ArrowBackOutline
+                                color={'#E8833A'}
+                                height="34px"
+                                width="34px"
+                            />
+                        </button>
+
+                }
+                CINEFLEX
+            </Header>
+
+        </>
+    )
+}
 
 const Header = styled.header`
 width: 100%;
@@ -9,14 +35,16 @@ justify-content: center;
 align-items: center;
 height: 67px;
 font-size: 34px;
+position: relative;
+
+button{
+    border: 0;
+    background-color: inherit;
+    position: absolute;
+    left: 0;
+
+}
 `;
 
-const TopBar = () => {
-    return (
-        <Header>
-            CINEFLEX
-        </Header>
-    )
-}
 
 export default TopBar;

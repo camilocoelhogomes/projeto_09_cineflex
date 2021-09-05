@@ -6,9 +6,7 @@ import Footer from "./Footer";
 import SectionDay from './SectionDay'
 import { Header } from './Shared'
 
-const MovieSection = styled.div`
-margin: 0 24px;
-`
+
 
 const MovieSections = () => {
     const { idMovie } = useParams();
@@ -50,3 +48,7 @@ const MovieSections = () => {
 }
 
 export default MovieSections;
+
+const MovieSection = styled.div`
+margin: 0 24px;
+`
