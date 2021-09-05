@@ -82,8 +82,7 @@ function App() {
     history.push('/');
     setSelectedSeats({
       ids: [],
-      name: '',
-      cpf: '',
+      compradores: [],
       movie: {},
       day: {},
       time: '',

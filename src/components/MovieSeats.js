@@ -24,7 +24,7 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
     if (Object.keys(seats).length === 0) {
         return <Header>Selecione o(s) assento(s)</Header>
     }
-
+    console.log(seats.seats);
     return (
         <>
             <Header>Selecione o(s) assento(s)</Header>
@@ -56,25 +56,38 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
             </SeatsLabel>
 
             <ReserveSeats>
-                <InputArea>
-                    <p>Nome do Comprador</p>
-                    <input
-                        placeholder={'Digite seu Nome...'}
-                        onChange={(e) => inputPerson('name', e.target.value)}
-                        value={selectedSeats.name}
-                    />
-                </InputArea>
-                <InputArea>
-                    <p>CPF do Comprador</p>
-                    <input
-                        value={selectedSeats.cpf}
-                        placeholder={'Digite seu CPF...'}
-                        onChange={(e) => inputPerson('cpf', e.target.value)}
-                    />
-                </InputArea>
+                {
+                    selectedSeats.ids.map((selectedSeat, key) =>
+                        <div key={key}>
+                            <InputArea>
+                                <p>Comprador do Assento {
+                                    seats.seats.filter(seat => seat.id === selectedSeat)
+                                        .map(seat => {
+                                            return seat.name < 10 ? `0${seat.name}` : seat.name
+                                        })
+
+                                }</p>
+                                <input
+                                    placeholder={'Digite seu Nome...'}
+                                    onChange={(e) => inputPerson('name', e.target.value, selectedSeats)}
+                                    value={selectedSeats.name}
+                                />
+                            </InputArea>
+                            <InputArea>
+                                <p>CPF do Comprador</p>
+                                <input
+                                    value={selectedSeats.cpf}
+                                    placeholder={'Digite seu CPF...'}
+                                    onChange={(e) => inputPerson('cpf', e.target.value, selectedSeats)}
+                                />
+                            </InputArea>
+
+                        </div>
+                    )
+                }
                 <Button
                     width='225px'
-                    disabled={selectedSeats.name.length === 0 || selectedSeats.cpf.length === 0 || selectedSeats.ids.length === 0}
+                    disabled={selectedSeats.ids.length === 0}
                     onClick={() => reserveSeats(selectedSeats, seats)}
                 >
                     Reserve Assentos
@@ -138,6 +151,10 @@ const ReserveSeats = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0 0 80px 0;
+
+    div{
+        width: 100%;
+    }
 `;
 
 const InputArea = styled.div`
