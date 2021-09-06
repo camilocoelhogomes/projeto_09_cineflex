@@ -83,7 +83,7 @@ function App() {
 
     setSelectedSeats(selectedMovie);
 
-    axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
+    axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, sendServer)
       .then(history.push('/confirm'))
 
   }

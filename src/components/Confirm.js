@@ -1,6 +1,6 @@
 import { Header, Button } from "./Shared"
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom';
+
 
 const Confirm = ({ selectedSeats, confirm }) => {
     console.log(selectedSeats);
