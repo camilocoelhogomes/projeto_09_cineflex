@@ -16,7 +16,7 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSection}/seats`)
             .then(awnser => { setSeats(awnser.data) })
 
-    }, [])
+    }, [idSection])
 
 
 

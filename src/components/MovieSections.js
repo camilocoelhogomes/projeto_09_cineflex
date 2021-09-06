@@ -16,7 +16,7 @@ const MovieSections = () => {
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies/${idMovie}/showtimes`)
             .then(awnser => setSections(awnser.data))
 
-    }, [])
+    }, [idMovie])
 
 
     if (Object.keys(sections).length === 0) {
