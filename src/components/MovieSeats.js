@@ -11,7 +11,7 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
 
     const { idSection } = useParams();
     const [seats, setSeats] = useState({});
-
+    console.log(selectedSeats.ids.sort((a, b) => a - b));
     useEffect(() => {
         axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSection}/seats`)
             .then(awnser => { setSeats(awnser.data) })
@@ -24,7 +24,7 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
     if (Object.keys(seats).length === 0) {
         return <Header>Selecione o(s) assento(s)</Header>
     }
-    console.log(seats.seats);
+
     return (
         <>
             <Header>Selecione o(s) assento(s)</Header>
@@ -57,7 +57,7 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
 
             <ReserveSeats>
                 {
-                    selectedSeats.ids.map((selectedSeat, key) =>
+                    selectedSeats.ids.sort((a, b) => a - b).map((selectedSeat, key) =>
                         <div key={key}>
                             <InputArea>
                                 <p>Comprador do Assento {
@@ -69,16 +69,16 @@ const MovieSeats = ({ selectedSeats, selectSeat, inputPerson, reserveSeats }) =>
                                 }</p>
                                 <input
                                     placeholder={'Digite seu Nome...'}
-                                    onChange={(e) => inputPerson('name', e.target.value, selectedSeats)}
-                                    value={selectedSeats.name}
+                                    onChange={(e) => inputPerson('nome', e.target.value, selectedSeat)}
+                                    value={selectedSeats.compradores.filter(comprador => comprador.idAssento === selectedSeat)[0].nome}
                                 />
                             </InputArea>
                             <InputArea>
                                 <p>CPF do Comprador</p>
                                 <input
-                                    value={selectedSeats.cpf}
+                                    value={selectedSeats.compradores.filter(comprador => comprador.idAssento === selectedSeat)[0].cpf}
                                     placeholder={'Digite seu CPF...'}
-                                    onChange={(e) => inputPerson('cpf', e.target.value, selectedSeats)}
+                                    onChange={(e) => inputPerson('cpf', e.target.value, selectedSeat)}
                                 />
                             </InputArea>
 

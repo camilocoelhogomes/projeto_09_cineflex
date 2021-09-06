@@ -1,6 +1,18 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
+const MovieCard = ({ posterURL, id, title }) => {
+    return (
+        <Link to={`movie/${id}`}>
+            <Poster>
+                <img src={posterURL} alt={title} />
+            </Poster>
+        </Link>
+    )
+}
+
+export default MovieCard;
+
 const Poster = styled.div`
     padding: 8px;
     width: 145px;
@@ -14,15 +26,3 @@ const Poster = styled.div`
     height: 100%;
     }
 `;
-
-const MovieCard = ({ posterURL, id, title }) => {
-    return (
-        <Link to={`movie/${id}`}>
-            <Poster>
-                <img src={posterURL} alt={title} />
-            </Poster>
-        </Link>
-    )
-}
-
-export default MovieCard;

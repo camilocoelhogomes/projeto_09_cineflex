@@ -18,8 +18,7 @@ function App() {
 
   const [selectedSeats, setSelectedSeats] = useState({
     ids: [],
-    name: '',
-    cpf: '',
+    compradores: [],
     movie: {},
     day: {},
     time: '',
@@ -35,21 +34,35 @@ function App() {
 
 
     if (isAvailable) {
+
       if (newSelectedSeats.ids.indexOf(idSeat) === -1) {
         newSelectedSeats.ids.push(idSeat);
+        newSelectedSeats.compradores.push({ idAssento: idSeat, nome: '', cpf: '' })
       }
+
       else {
-        newSelectedSeats.ids = newSelectedSeats.ids.filter(seat => seat !== idSeat);
+        const seat = newSelectedSeats.compradores.filter(comprador => comprador.idAssento === idSeat)[0]
+        if ((seat.nome !== '' || seat.cpf !== '') && window.confirm('Gostaria realmente de remover o assento e apagar os dados?')) {
+
+          newSelectedSeats.ids = newSelectedSeats.ids.filter(seat => seat !== idSeat);
+          newSelectedSeats.compradores = newSelectedSeats.compradores.filter(comprador => comprador.idAssento !== idSeat);
+        }
+        else if (seat.nome === '' && seat.cpf === '') {
+          newSelectedSeats.ids = newSelectedSeats.ids.filter(seat => seat !== idSeat);
+          newSelectedSeats.compradores = newSelectedSeats.compradores.filter(comprador => comprador.idAssento !== idSeat);
+        }
+
       }
+
       setSelectedSeats(newSelectedSeats);
     }
 
     else { alert('Assento Indisponível') }
   }
 
-  const inputPerson = (item, value) => {
+  const inputPerson = (item, value, idSeat) => {
     const newPerson = { ...selectedSeats };
-    newPerson[item] = value;
+    newPerson.compradores.forEach(comprador => comprador.idAssento === idSeat ? comprador[item] = value : '');
     setSelectedSeats(newPerson);
   }
 
@@ -70,7 +83,6 @@ function App() {
       .map(seat => seat.name);
 
     setSelectedSeats(selectedMovie);
-    console.log(selectedMovie);
     history.push('/confirm');
     /*/
     axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
