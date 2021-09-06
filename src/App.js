@@ -70,8 +70,7 @@ function App() {
 
     const sendServer = {
       ids: selectedSeats.ids,
-      name: selectedSeats.name,
-      cpf: selectedSeats.cpf
+      compradores: selectedSeats.compradores
     }
     const selectedMovie = { ...selectedSeats };
 
@@ -83,8 +82,8 @@ function App() {
       .map(seat => seat.name);
 
     setSelectedSeats(selectedMovie);
-    history.push('/confirm');
-    /*/
+    //history.push('/confirm');
+    //
     axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many`, selectedSeats)
       .then(history.push('/confirm'))
     //*/

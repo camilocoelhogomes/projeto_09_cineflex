@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom';
 
 const Confirm = ({ selectedSeats, confirm }) => {
-
+    console.log(selectedSeats);
     return (
         <ConfirmScreen>
             <Header type='confirm'>Pedido feito com sucesso!</Header>
@@ -12,9 +12,15 @@ const Confirm = ({ selectedSeats, confirm }) => {
             <p>{selectedSeats.day.weekday} - {selectedSeats.time}</p>
             <h2>Ingressos</h2>
             {selectedSeats.tickets.map(ticket => <p>Assento {ticket}</p>)}
-            <h2>Comprador</h2>
-            <p>{selectedSeats.name}</p>
-            <p>{selectedSeats.cpf}</p>
+            <h2>Comprador (es)</h2>
+            {
+                selectedSeats.compradores.map(comprador =>
+                    <>
+                        <p>Nome: {comprador.nome}</p>
+                        <p>CPF: {comprador.cpf}</p>
+                        <br />
+                    </>)
+            }
 
             <Button width='225px' onClick={confirm}>Voltar para a Home</Button>
         </ConfirmScreen>
